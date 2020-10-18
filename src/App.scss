@@ -1,0 +1,12 @@
+$color-sassy: #cc4397;
+$color-blue: #0059ff;
+
+
+.App {
+  margin: 1rem;
+  padding: 0 20px;
+  font-family: Arial, Helvetica, sans-serif;
+  p {
+    color:$color-sassy;
+  }
+}

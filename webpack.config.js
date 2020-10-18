@@ -1,8 +1,5 @@
 const path = require("path");
 const webpack = require("webpack");
-const bundlePath = path.resolve(__dirname, "dist/");
-const NodemonPlugin = require('nodemon-webpack-plugin');
-const StaticSiteGeneratorPlugin = require('static-site-generator-webpack-plugin');
 
 module.exports = {
   entry: "./src/index.js",
@@ -12,51 +9,31 @@ module.exports = {
       {
         test: /\.(js|jsx)$/,
         exclude: /(node_modules|bower_components)/,
-        loader: 'babel-loader',
+        loader: "babel-loader",
         options: { presets: ["@babel/env"] }
+      },
+      {
+        test: /\.scss$/,
+        use: [ 'style-loader', 'css-loader', 'sass-loader' ]
       },
       {
         test: /\.css$/,
         use: [ 'style-loader', 'css-loader' ]
-      },
-      {
-        test: /\.(png|jpe?g|gif)$/i,
-        use: [
-          {
-            loader: 'file-loader',
-          },
-        ],
       }
     ]
   },
-  resolve: { extensions: ['*', '.js', '.jsx'] },
+  resolve: { extensions: ["*", ".js", ".jsx"] },
   output: {
-    globalObject: 'this', 
-    path: bundlePath,
+    path: path.resolve(__dirname, "dist/"),
     publicPath: "/dist/",
     filename: "bundle.js"
   },
   devServer: {
-    contentBase: path.join(__dirname,'public/'),
+    contentBase: path.join(__dirname, "public/"),
     port: 3000,
     publicPath: "http://localhost:3000/dist/",
-    hot: true,
-    historyApiFallback: true
+    hotOnly: true,
+    historyApiFallback: true,
   },
-  watchOptions: {
-    ignored: /dist/
-  },
-  plugins: [ 
-    new webpack.HotModuleReplacementPlugin(), 
-    new NodemonPlugin(), 
-    new webpack.WatchIgnorePlugin([ './dist'] ),
-    new StaticSiteGeneratorPlugin({
-      globals: {
-        window: {}
-      }
-    })
-  ],
-  performance: {
-    hints: false
-  },
+  plugins: [new webpack.HotModuleReplacementPlugin()]
 };

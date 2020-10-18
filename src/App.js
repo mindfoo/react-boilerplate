@@ -1,10 +1,13 @@
+
 import React, { Component } from "react";
-//import {hot} from "react-hot-loader";
+
 import { withRouter } from 'react-router-dom';
 import { Switch, Route } from 'react-router-dom';
 
 /* styles */
-import "./App.css";
+import 'antd/dist/antd.css';
+import "./App.scss";
+
 /* components */
 import Header from './components/general/Header';
 import StoreForm from './components/StoreForm';
@@ -17,7 +20,7 @@ class App extends Component {
     service = new AuthService();
 
     state = {
-        isUserLoggedIn: null,
+        isUserLoggedIn: false,
         loading: true,
     }
 
@@ -37,13 +40,17 @@ class App extends Component {
                 <Header></Header>
 
                 <Switch>
-                    <Route exact path='/' render={() =>(
-                        !isUserLoggedIn ? (
+                    {/* <Route exact path='/' render={() =>(
+                        !this.state.isUserLoggedIn ? (
                             <Redirect to='/www.pathToLogin.com'/>
                         ) : (
                             <StoreList />
                         )
-                    )} />
+                    )} /> */}
+                    <Route exact path='/'>
+                        <p>This is home</p>
+                    </Route>
+
                     <Route path='/storeform'><StoreForm /></Route>
                     <Route path='/storelist'><StoreList /></Route>
                 </Switch>
@@ -54,4 +61,4 @@ class App extends Component {
 
 
  
-export default withRouter(App);
+export default withRouter(App) ;
