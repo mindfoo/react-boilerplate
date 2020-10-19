@@ -10,6 +10,8 @@ import {
     Select,
     TreeSelect
 } from 'antd';
+
+const { Option } = Select;
  
 /* class StoreForm extends Component {
     componentDidMount(){
@@ -85,11 +87,11 @@ class StoreForm extends Component {
                     <Input placeholder="Write something here..."/>
                 </Form.Item>
                 <Form.Item label="Select" name="loja"> 
-                    <Select placeholder="Escolher loja">
+                    <Select placeholder="Escolher loja" value={this.state.loja} onChange={ e => this.handleChange(e)}>
                         {this.state.listOfStores.map((store, i) => {
                             return(
                                 <>
-                                    <Option key={store.id} value="demo">{`Loja ${store.id}`}</Option>
+                                    <Option key={store.id} value={`Loja ${store.id}`} >{`Loja ${store.id}`}</Option>
                                 </>
                             )
                         })}
