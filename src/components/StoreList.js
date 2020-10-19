@@ -1,6 +1,8 @@
 // components/StoreList.js
 import React, { Component } from 'react';
 import axios from 'axios';
+import { Card } from 'antd';
+import { Link } from 'react-router-dom';
 
 class StoreList extends Component {
 
@@ -21,11 +23,11 @@ class StoreList extends Component {
             })
         });
 
-        /* let service = axios.create({
+        /* let apiCall = axios.create({
             baseURL: `${process.env.REACT_APP_SERVER}`,
             withCredentials: true
         });
-        return (service.get(`/services`).then(responseFromAPI => {
+        return (apiCall.get(`/stores`).then(responseFromAPI => {
                 this.setState({
                     listOfStores: responseFromAPI.data
                 });
@@ -33,18 +35,24 @@ class StoreList extends Component {
     }
 
 
-
-
-    
-
     render() {
         return (
             <>
-                <h1 className="App-title">StoreList</h1>
+                <h1 className="title">StoreList</h1>
 
                 {this.state.listOfStores.map((store, i) => {
                     return(
-                    <div key={i}> {store.id} </div>
+                        <>
+                            <Card 
+                                key={i}
+                                size="small" 
+                                title={`Loja ${store.id}`} 
+                                bodyStyle={{padding:0}} 
+                                extra={<Link to={`/${store.id}`} >View</Link>} 
+                                style={{marginTop: 20}} 
+                            >
+                            </Card>
+                        </>
                     )
                 })}
 

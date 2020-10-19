@@ -1,6 +1,6 @@
 // components/StoreForm.js
 import React, { Component } from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 import {
@@ -32,11 +32,26 @@ import {
 
 class StoreForm extends Component {
     state = {
+        listOfStores:[],
         loja:'',
         loja1:'',
         loja2:'',
         input:'',
         myRef: React.createRef()
+    }
+
+    componentDidMount() {
+        this.getStores();
+    }
+
+    getStores = () => {
+        axios.get('https://jsonplaceholder.typicode.com/posts')
+            .then(responseFromAPI => {
+            console.log(responseFromAPI);
+            this.setState({
+                listOfStores: responseFromAPI.data
+            })
+        });
     }
 
     handleChange = (e) => {
@@ -54,6 +69,8 @@ class StoreForm extends Component {
         
         return (
         <>
+            <h1 className="title">StoreForm</h1>
+
             <Form
                 labelCol={{
                     span: 4,
@@ -68,24 +85,30 @@ class StoreForm extends Component {
                     <Input placeholder="Write something here..."/>
                 </Form.Item>
                 <Form.Item label="Select" name="loja"> 
-                    <Select>
-                    <Select.Option value="demo">Demo</Select.Option>
+                    <Select placeholder="Escolher loja">
+                        {this.state.listOfStores.map((store, i) => {
+                            return(
+                                <>
+                                    <Option key={store.id} value="demo">{`Loja ${store.id}`}</Option>
+                                </>
+                            )
+                        })}
                     </Select>
                 </Form.Item>
                 <Form.Item label="TreeSelect" name="loja1">
                     <TreeSelect
-                    treeData={[
-                        {
-                        title: 'Light',
-                        value: 'light',
-                        children: [
+                        treeData={[
                             {
-                            title: 'Bamboo',
-                            value: 'bamboo',
+                            title: 'Light',
+                            value: 'light',
+                            children: [
+                                {
+                                title: 'Bamboo',
+                                value: 'bamboo',
+                                },
+                            ],
                             },
-                        ],
-                        },
-                    ]}
+                        ]}
                     />
                 </Form.Item>
                 <Form.Item label="Input" name="loja2">
