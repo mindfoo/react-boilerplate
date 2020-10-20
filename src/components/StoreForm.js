@@ -64,6 +64,14 @@ class StoreForm extends Component {
     handleFormSubmit = (e) => {
         e.preventDefault();
         this.props.submitStoreForm(this.state);
+       
+        const { loja, loja1, loja2, input } = this.state;
+        axios.post(`${process.env.REACT_APP_SERVER}/someRoute/ToSaveForm`, { loja, loja1, loja2, input })
+            .then(() => {
+                this.setState({ loja: '', loja1: '', loja2: "", input: "" });
+                //toast('Form submitted!');
+                this.props.history.push('/');
+            })
     }
 
 
@@ -86,17 +94,19 @@ class StoreForm extends Component {
                 <Form.Item label="Input" name="input" value={this.state.input} onChange={ e => this.handleChange(e)}>
                     <Input placeholder="Write something here..."/>
                 </Form.Item>
+
                 <Form.Item label="Select" name="loja"> 
                     <Select placeholder="Escolher loja" value={this.state.loja} onChange={ e => this.handleChange(e)}>
                         {this.state.listOfStores.map((store, i) => {
                             return(
                                 <>
-                                    <Option key={store.id} value={`Loja ${store.id}`} >{`Loja ${store.id}`}</Option>
+                                    <Option key={store.id}>{`Loja ${store.id}`}</Option>
                                 </>
                             )
                         })}
                     </Select>
                 </Form.Item>
+
                 <Form.Item label="TreeSelect" name="loja1">
                     <TreeSelect
                         treeData={[
